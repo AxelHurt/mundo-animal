@@ -29,6 +29,7 @@ export default function InventarioView() {
           loading={loading}
           editingId={editingId}
           onCancelEdit={cancelEdit}
+          onDelete={handleDeleteProduct}
         />
       </div>
 
@@ -55,7 +56,6 @@ export default function InventarioView() {
         <ProductTable
           productos={productos} // Ya vienen filtrados del hook
           onEdit={handleEditClick}
-          onDelete={handleDeleteProduct}
         />
       </div>
     </div>

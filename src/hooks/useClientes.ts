@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { clientesService } from "../services/clientes";
+import toast from "react-hot-toast"; // <--- 1. Importamos la librería
 
 const initialFormState = { nombre: "", telefono: "", descripcion: "" };
 
@@ -20,13 +21,22 @@ export function useClientes() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["clientes"] });
       setFormCliente(initialFormState);
+      // ✅ 2. Mensaje de Éxito bonito
+      toast.success("¡Cliente registrado correctamente!", {
+        icon: "👤", // Icono opcional para darle estilo
+      });
     },
-    onError: () => alert("Error al crear cliente"),
+    onError: () => {
+      // ❌ 3. Mensaje de Error
+      toast.error("Error al guardar el cliente. Intenta nuevamente.");
+    },
   });
 
   const handleCrearCliente = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!formCliente.nombre) return alert("El nombre es obligatorio");
+
+    // ⚠️ 4. Validación con Toast en lugar de Alert
+    if (!formCliente.nombre) return toast.error("El nombre es obligatorio");
 
     crearMutation.mutate({
       nombre: formCliente.nombre,

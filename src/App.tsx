@@ -4,6 +4,7 @@ import LoginView from "./views/LoginView";
 import ClientesView from "./views/ClientesView";
 import InventarioView from "./views/InventarioView";
 import CajaView from "./views/CajaView";
+import { Toaster } from "react-hot-toast"; // <--- 1. Importar
 
 function AppContent() {
   const { session, loading, signOut } = useAuth();
@@ -140,6 +141,34 @@ export default function App() {
   return (
     <AuthProvider>
       <AppContent />
+      {/* 2. Agregar el Toaster aquí al final */}
+      <Toaster
+        position="bottom-right"
+        toastOptions={{
+          className: "font-bold text-slate-700",
+          duration: 3000,
+          style: {
+            background: "#333",
+            color: "#fff",
+          },
+          success: {
+            style: {
+              background: "#10B981", // Verde Emerald
+              color: "white",
+            },
+            iconTheme: {
+              primary: "white",
+              secondary: "#10B981",
+            },
+          },
+          error: {
+            style: {
+              background: "#EF4444", // Rojo
+              color: "white",
+            },
+          },
+        }}
+      />
     </AuthProvider>
   );
 }
